@@ -12,9 +12,9 @@ const {
   POSTGRES_TEST_USER,
   POSTGRES_PASSWORD,
 } = process.env;
-const POSTGRES_DATA_BASE = ENV == 'test' ? POSTGRES_DB_TEST : POSTGRES_DB;
+const POSTGRES_DATA_BASE = ENV === 'test' ? POSTGRES_DB_TEST : POSTGRES_DB;
 const POSTGRES_DATA_BASE_USER =
-  ENV == 'test' ? POSTGRES_TEST_USER : POSTGRES_USER;
+  ENV === 'test' ? POSTGRES_TEST_USER : POSTGRES_USER;
 
 export const client = new Pool({
   host: POSTGRES_HOST,

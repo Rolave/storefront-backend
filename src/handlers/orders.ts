@@ -19,7 +19,6 @@ const show = async (req: Request, res: Response): Promise<void> => {
     const id: number = parseInt(req.params.id);
     const order = await store.show(id);
     res.json(order);
-    console.log('TRY', order);
   } catch (err) {
     res.status(400);
     res.json({ err });
@@ -85,7 +84,7 @@ const addProduct = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-export const orders_routes = (app: express.Application) => {
+export const orders_routes = (app: express.Application): void => {
   app.get('/orders', index);
   app.get('/orders/:id', show);
   app.post('/orders', create);

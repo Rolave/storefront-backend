@@ -17,7 +17,6 @@ const index = async (_req: Request, res: Response): Promise<void> => {
 const show = async (req: Request, res: Response): Promise<void> => {
   try {
     const id: number = parseInt(req.params.id);
-    console.log(id);
     const product = await store.show(id);
     res.json(product);
   } catch (err) {
@@ -72,7 +71,7 @@ const destroy = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-export const products_routes = (app: express.Application) => {
+export const products_routes = (app: express.Application): void => {
   app.get('/products', index);
   app.get('/products/:id', show);
   app.post('/products', verifyAuthToken, create);

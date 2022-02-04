@@ -18,7 +18,7 @@ const productsInOrders = async (_req: Request, res: Response) => {
   res.json(products);
 };
 
-export const dashboards_routes = (app: express.Application) => {
+export const dashboards_routes = (app: express.Application): void => {
   app.get('/five-most-expensive', fiveMostExpensive);
   app.get('/products-in-orders', productsInOrders);
   app.get('/users-with-orders', usersWithOrders);
