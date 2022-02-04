@@ -1,8 +1,7 @@
 # Storefront Backend
 Project for Udacity's Full Stack JavaScript Developer Nanodegree Program
 
-To get started right away:
-
+To get started right away.
 ### Install
 
     npm install
@@ -14,86 +13,45 @@ To get started right away:
 ### Run the tests
 
     npm run test
-## Users
-### Requests and body parameters
+### Environment variables
+You should set all the proyect values on a .env file.
+```
+ENV=dev
+PORT=3000
+POSTGRES_HOST=127.0.0.1
+POSTGRES_DB=storefront_db
+POSTGRES_DB_TEST=storefront_db_test
+POSTGRES_USER=storefront_admin
+POSTGRES_TEST_USER=storefront_admin_test
+POSTGRES_PASSWORD=password123
+BCRYPT_PASSWORD=pepper123
+SALT_ROUNDS=10
+SECRET_TOKEN=my_secret_token
+```
+## Server port
+    0.0.0.0:3000
 
-      POST '/users'        -> CREATE / Creates a new user
-        body: {
-          "username": "don_tester",
-          "first_name": "Don",
-          "last_name": "Tester",
-          "password": "p4s5w0rD73sT"
-        }
+## Create Development Database
 
-      GET '/users'         -> INDEX / Get all users
+    CREATE DATABASE storefront_db;
+## Create User for Development Database
 
-      GET '/users/:id'     -> SHOW / Get an user by its ID, authentication needed
+    CREATE USER storefront_admin WITH ENCRYPTED PASSWORD 'password123';
+    GRANT ALL PRIVILEGES ON DATABASE storefront_db TO storefront_admin;
+## Create Test Database
 
-      PUT '/users/:id'     -> UPDATE / Update user info by its ID, authentication needed
-        body: {
-          "username": "don_tester",
-          "first_name": "Don",
-          "last_name": "Tester",
-          "password": "p4s5w0rD73sT"
-        }
+    CREATE DATABASE storefront_db_test;
+## Create User for Test Database
 
-      DELETE '/users/:id'  -> DELETE / Delete an user by its ID, authentication needed
+    CREATE USER storefront_admin_test WITH ENCRYPTED PASSWORD 'password123';
+    GRANT ALL PRIVILEGES ON DATABASE storefront_db_test TO storefront_admin_test;
 
-      POST '/users/auth'   -> AUTHENTICATE / Authenticate an user
-        body: {
-          "username": "don_tester",
-          "password": "p4s5w0rD73sT"
-        }
-## Products
-### Requests and body parameters
+## Database Port
+    127.0.0.1
+## Database Migrations
+After creating the data and user, you must run the migrations, so that generate the tables that are needed in this API.
 
-      POST '/products'        -> CREATE / Creates a new product
-        body: {
-          "name": "Awesome product",
-          "price": 1983,
-          "category": "Technology"
-        }
-
-      GET '/products'         -> INDEX / Get all products
-
-      GET '/products/:id'     -> SHOW / Get an product by its ID
-
-      PUT '/products/:id'     -> UPDATE / Update product info by its ID, authentication needed
-        body: {
-          "name": "Super awesome product",
-          "price": 1983,
-          "category": "Technology"
-        }
-
-      DELETE '/products/:id'  -> DELETE / Delete an product by its ID, authentication needed
-
-## Orders
-### Requests and body parameters
-
-      POST '/orders'               -> CREATE / Creates a new order
-        body: {
-          "user_id": 1,
-        }
-
-      GET '/orders'                -> INDEX / Get all orders
-
-      GET '/orders/:id'            -> SHOW / Get an order by its ID
-
-      PUT '/orders/:id'            -> UPDATE / Update order info by its ID, authentication needed
-        body: {
-          "status": "closed",
-          "user_id": 1,
-        }
-
-      DELETE '/orders/:id'         -> DELETE / Delete an order by its ID, authentication needed
-
-      POST '/orders/:id/products'  -> ADD PRODUCT / Delete an order by its ID
-
-## Dashboards
-### Requests and body parameters
-
-      GET '/five-most-expensive'         -> INDEX / Gets name and price from five more expensive products
-
-      GET '/products-in-orders'          -> INDEX / Gets name, price and order_id from products assigned to an order
-
-      GET '/users-with-orders'           -> SHOW / Gets first_name and last_name from all users wich have orders
+### Bring the migration up 
+      db-migrate up
+### Bring the migration down
+      db-migrate down
