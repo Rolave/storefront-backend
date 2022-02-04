@@ -72,9 +72,9 @@ const destroy = async (req: Request, res: Response): Promise<void> => {
 };
 
 export const products_routes = (app: express.Application): void => {
+  app.post('/products', verifyAuthToken, create);
   app.get('/products', index);
   app.get('/products/:id', show);
-  app.post('/products', verifyAuthToken, create);
   app.put('/products/:id', verifyAuthToken, update);
   app.delete('/products/:id', verifyAuthToken, destroy);
 };

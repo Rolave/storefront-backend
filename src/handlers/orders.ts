@@ -4,6 +4,22 @@ import { verifyAuthToken } from '../utilities';
 
 const store = new OrderStore();
 
+const create = async (req: Request, res: Response): Promise<void> => {
+  const { user_id } = req.body;
+  try {
+    const order: Order = {
+      status: 'active',
+      user_id,
+    };
+    const newOrder = await store.create(order);
+
+    res.json(newOrder);
+  } catch (err) {
+    res.status(400);
+    res.json({ err });
+  }
+};
+
 const index = async (_req: Request, res: Response): Promise<void> => {
   try {
     const orders = await store.index();
@@ -25,26 +41,12 @@ const show = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-const create = async (req: Request, res: Response): Promise<void> => {
-  const { user_id } = req.body;
-  try {
-    const order: Order = {
-      status: 'active',
-      user_id,
-    };
-    const newOrder = await store.create(order);
-
-    res.json(newOrder);
-  } catch (err) {
-    res.status(400);
-    res.json({ err });
-  }
-};
-
 const update = async (req: Request, res: Response): Promise<void> => {
+  const id: number = parseInt(req.params.id);
   const { status, user_id } = req.body;
   try {
     const order: Order = {
+      id,
       status,
       user_id,
     };
@@ -85,9 +87,9 @@ const addProduct = async (req: Request, res: Response): Promise<void> => {
 };
 
 export const orders_routes = (app: express.Application): void => {
+  app.post('/orders', create);
   app.get('/orders', index);
   app.get('/orders/:id', show);
-  app.post('/orders', create);
   app.put('/orders/:id', verifyAuthToken, update);
   app.delete('/orders/:id', verifyAuthToken, destroy);
   app.post('/orders/:id/products', addProduct);
