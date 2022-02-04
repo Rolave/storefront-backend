@@ -3,23 +3,49 @@ import { DashboardQueries } from '../services/dashboard';
 
 const dashboard = new DashboardQueries();
 
-const fiveMostExpensive = async (_req: Request, res: Response) => {
-  const users = await dashboard.fiveMostExpensive();
-  res.json(users);
+const getFiveMostExpensive = async (
+  _req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const products = await dashboard.getFiveMostExpensive();
+
+    res.json(products);
+  } catch (err) {
+    res.status(400);
+    res.json({ err });
+  }
 };
 
-const usersWithOrders = async (_req: Request, res: Response) => {
-  const users = await dashboard.usersWithOrders();
-  res.json(users);
+const getProductsInOrders = async (
+  _req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const products = await dashboard.getProductsInOrders();
+    res.json(products);
+  } catch (err) {
+    res.status(400);
+    res.json({ err });
+  }
 };
 
-const productsInOrders = async (_req: Request, res: Response) => {
-  const products = await dashboard.productsInOrders();
-  res.json(products);
+const getUsersWithOrders = async (
+  _req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const users = await dashboard.getUsersWithOrders();
+
+    res.json(users);
+  } catch (err) {
+    res.status(400);
+    res.json({ err });
+  }
 };
 
-export const dashboards_routes = (app: express.Application) => {
-  app.get('/five-most-expensive', fiveMostExpensive);
-  app.get('/products-in-orders', productsInOrders);
-  app.get('/users-with-orders', usersWithOrders);
+export const dashboards_routes = (app: express.Application): void => {
+  app.get('/five-most-expensive', getFiveMostExpensive);
+  app.get('/products-in-orders', getProductsInOrders);
+  app.get('/users-with-orders', getUsersWithOrders);
 };

@@ -78,18 +78,17 @@ describe('User Model', () => {
   });
 
   it('update method should return an updated user', async () => {
-    const { username: _username, ...user_test_values } = user_test;
     const result = (await store.update({
       id: user_test.id,
+      ...user_test,
       username,
-      ...user_test_values,
       password: password_test,
     })) as User;
 
     expect(result).toEqual({
+      ...user_test,
       id: user_test.id,
       username,
-      ...user_test_values,
     });
   });
 

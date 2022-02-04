@@ -18,10 +18,9 @@ describe('Order Model', () => {
   const status = 'closed';
 
   beforeAll(async () => {
-    const new_user = await userStore.create(user_test);
+    await userStore.create(user_test);
     const new_order = await store.create(order_test);
     order_test.id = new_order.id;
-    console.log(order_test);
   });
 
   afterAll(async () => {

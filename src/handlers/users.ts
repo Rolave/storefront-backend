@@ -87,7 +87,7 @@ const authenticate = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-export const users_routes = (app: Application) => {
+export const users_routes = (app: Application): void => {
   app.post('/users', create);
   app.get('/users', index);
   app.get('/users/:id', show);

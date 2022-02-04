@@ -1,54 +1,99 @@
-# Storefront Backend Project
+# Storefront Backend
+Project for Udacity's Full Stack JavaScript Developer Nanodegree Program
 
-## Getting Started
+To get started right away:
 
-This repo contains a basic Node and Express app to get you started in constructing an API. To get started, clone this repo and run `yarn` in your terminal at the project root.
+### Install
 
-## Required Technologies
-Your application must make use of the following libraries:
-- Postgres for the database
-- Node/Express for the application logic
-- dotenv from npm for managing environment variables
-- db-migrate from npm for migrations
-- jsonwebtoken from npm for working with JWTs
-- jasmine from npm for testing
+    npm install
 
-## Steps to Completion
+### Run the app
 
-### 1. Plan to Meet Requirements
+    npm start
 
-In this repo there is a `REQUIREMENTS.md` document which outlines what this API needs to supply for the frontend, as well as the agreed upon data shapes to be passed between front and backend. This is much like a document you might come across in real life when building or extending an API. 
+### Run the tests
 
-Your first task is to read the requirements and update the document with the following:
-- Determine the RESTful route for each endpoint listed. Add the RESTful route and HTTP verb to the document so that the frontend developer can begin to build their fetch requests.    
-**Example**: A SHOW route: 'blogs/:id' [GET] 
+    npm run test
+## Users
+### Requests and body parameters
 
-- Design the Postgres database tables based off the data shape requirements. Add to the requirements document the database tables and columns being sure to mark foreign keys.   
-**Example**: You can format this however you like but these types of information should be provided
-Table: Books (id:varchar, title:varchar, author:varchar, published_year:varchar, publisher_id:string[foreign key to publishers table], pages:number)
+      POST '/users'        -> CREATE / Creates a new user
+        body: {
+          "username": "don_tester",
+          "first_name": "Don",
+          "last_name": "Tester",
+          "password": "p4s5w0rD73sT"
+        }
 
-**NOTE** It is important to remember that there might not be a one to one ratio between data shapes and database tables. Data shapes only outline the structure of objects being passed between frontend and API, the database may need multiple tables to store a single shape. 
+      GET '/users'         -> INDEX / Get all users
 
-### 2.  DB Creation and Migrations
+      GET '/users/:id'     -> SHOW / Get an user by its ID, authentication needed
 
-Now that you have the structure of the databse outlined, it is time to create the database and migrations. Add the npm packages dotenv and db-migrate that we used in the course and setup your Postgres database. If you get stuck, you can always revisit the database lesson for a reminder. 
+      PUT '/users/:id'     -> UPDATE / Update user info by its ID, authentication needed
+        body: {
+          "username": "don_tester",
+          "first_name": "Don",
+          "last_name": "Tester",
+          "password": "p4s5w0rD73sT"
+        }
 
-You must also ensure that any sensitive information is hashed with bcrypt. If any passwords are found in plain text in your application it will not pass.
+      DELETE '/users/:id'  -> DELETE / Delete an user by its ID, authentication needed
 
-### 3. Models
+      POST '/users/auth'   -> AUTHENTICATE / Authenticate an user
+        body: {
+          "username": "don_tester",
+          "password": "p4s5w0rD73sT"
+        }
+## Products
+### Requests and body parameters
 
-Create the models for each database table. The methods in each model should map to the endpoints in `REQUIREMENTS.md`. Remember that these models should all have test suites and mocks.
+      POST '/products'        -> CREATE / Creates a new product
+        body: {
+          "name": "Awesome product",
+          "price": 1983,
+          "category": "Technology"
+        }
 
-### 4. Express Handlers
+      GET '/products'         -> INDEX / Get all products
 
-Set up the Express handlers to route incoming requests to the correct model method. Make sure that the endpoints you create match up with the enpoints listed in `REQUIREMENTS.md`. Endpoints must have tests and be CORS enabled. 
+      GET '/products/:id'     -> SHOW / Get an product by its ID
 
-### 5. JWTs
+      PUT '/products/:id'     -> UPDATE / Update product info by its ID, authentication needed
+        body: {
+          "name": "Super awesome product",
+          "price": 1983,
+          "category": "Technology"
+        }
 
-Add JWT functionality as shown in the course. Make sure that JWTs are required for the routes listed in `REQUIUREMENTS.md`.
+      DELETE '/products/:id'  -> DELETE / Delete an product by its ID, authentication needed
 
-### 6. QA and `README.md`
+## Orders
+### Requests and body parameters
 
-Before submitting, make sure that your project is complete with a `README.md`. Your `README.md` must include instructions for setting up and running your project including how you setup, run, and connect to your database. 
+      POST '/orders'               -> CREATE / Creates a new order
+        body: {
+          "user_id": 1,
+        }
 
-Before submitting your project, spin it up and test each endpoint. If each one responds with data that matches the data shapes from the `REQUIREMENTS.md`, it is ready for submission!
+      GET '/orders'                -> INDEX / Get all orders
+
+      GET '/orders/:id'            -> SHOW / Get an order by its ID
+
+      PUT '/orders/:id'            -> UPDATE / Update order info by its ID, authentication needed
+        body: {
+          "status": "closed",
+          "user_id": 1,
+        }
+
+      DELETE '/orders/:id'         -> DELETE / Delete an order by its ID, authentication needed
+
+      POST '/orders/:id/products'  -> ADD PRODUCT / Delete an order by its ID
+
+## Dashboards
+### Requests and body parameters
+
+      GET '/five-most-expensive'         -> INDEX / Gets name and price from five more expensive products
+
+      GET '/products-in-orders'          -> INDEX / Gets name, price and order_id from products assigned to an order
+
+      GET '/users-with-orders'           -> SHOW / Gets first_name and last_name from all users wich have orders
